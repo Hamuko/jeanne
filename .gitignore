@@ -1,0 +1,5 @@
+/target
+
+# Prevent people from accidentally committing their configs
+config.yaml
+config.yml
