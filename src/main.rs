@@ -15,6 +15,7 @@ const GLOBAL: &str = "global";
 #[derive(Parser)]
 #[command(name = "jeanne", version)]
 struct Cli {
+    #[arg(env = "JEANNE_CONFIG")]
     /// Path to the configuration Yaml file.
     config: PathBuf,
 }
