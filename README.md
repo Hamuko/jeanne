@@ -32,3 +32,34 @@ rules:
 ```
 
 `server.username` and `server.password` are optional if your qBittorrent server does not require authentication.
+
+## Running
+
+### Binary
+
+After making the configuration file, run the jeanne binary with a path to the configuration file.
+
+```shell
+jeanne /path/to/jeanne/config.yaml
+```
+
+### Docker
+
+You can run jeanne using Docker by just mounting a configuration file under `/config.yaml` (default path).
+
+```shell
+docker run -v /path/to/jeanne/config.yaml:/config.yaml ghcr.io/hamuko/jeanne:latest
+```
+
+Docker Compose:
+
+```yaml
+version: '3.7'
+services:
+  jeanne:
+    image: ghcr.io/hamuko/jeanne:latest
+    container_name: jeanne
+    volumes:
+      - /path/to/jeanne/config.yaml:/config.yaml
+    restart: on-failure
+```
