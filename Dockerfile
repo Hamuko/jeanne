@@ -1,11 +1,8 @@
 # BUILD CONTAINER
 
-FROM rust:1.86 AS build
+FROM rust:1.93 AS build
 
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
-
-RUN apt-get update && apt-get install -y ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
 
 RUN USER=root cargo new --bin jeanne
 
@@ -24,12 +21,10 @@ RUN cargo build --release --verbose
 
 # RUNTIME CONTAINER
 
-FROM debian:bookworm-slim
+FROM gcr.io/distroless/cc-debian13
 
-COPY --from=build /etc/ssl/certs/ /etc/ssl/certs/
-
-COPY --from=build /jeanne/target/release/jeanne .
+COPY --from=build /jeanne/target/release/jeanne /bin/jeanne
 
 ENV JEANNE_CONFIG=/config.yaml
 
-CMD ["./jeanne"]
+ENTRYPOINT ["/bin/jeanne"]
