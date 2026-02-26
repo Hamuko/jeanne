@@ -10,7 +10,7 @@ use std::str::FromStr;
 
 #[derive(Debug)]
 pub enum ConfigError {
-    Deserialization(serde_yaml::Error),
+    Deserialization(yaml_serde::Error),
     Io(io::Error),
 }
 
@@ -96,7 +96,7 @@ impl<'de, T: FromStr> serde::Deserialize<'de> for Comparison<T> {
 impl Config {
     pub fn load(path: &Path) -> Result<Self, ConfigError> {
         let yaml = Self::load_file(path).map_err(ConfigError::Io)?;
-        let config: Self = serde_yaml::from_str(&yaml).map_err(ConfigError::Deserialization)?;
+        let config: Self = yaml_serde::from_str(&yaml).map_err(ConfigError::Deserialization)?;
         Ok(config)
     }
 
