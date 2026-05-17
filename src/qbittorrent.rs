@@ -216,6 +216,7 @@ impl Client {
             ("inactiveSeedingTimeLimit", GLOBAL_LIMIT),
             ("ratioLimit", &ratio),
             ("seedingTimeLimit", &minutes),
+            ("shareLimitAction", "-1"), // Default
         ]);
         let url = self
             .base_url
